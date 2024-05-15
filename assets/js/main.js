@@ -70,3 +70,40 @@ sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400
 sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
 sr.reveal('.education__container, .education__title, .education__subtitle, .education__info', {});
+
+
+//send successfully
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // Submit the form data to Formspree
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        // Check if form submission was successful
+        if (response.ok) {
+            // Display success message
+            successMessage.style.display = 'block';
+            // Optionally, reset the form
+            form.reset();
+            // Hide the success message after a few seconds
+            setTimeout(function() {
+                successMessage.style.display = 'none';
+            }, 3000); // Adjust the time as needed
+        } else {
+            // Handle error
+            console.error('Form submission failed:', response.statusText);
+        }
+    });
+});
+
