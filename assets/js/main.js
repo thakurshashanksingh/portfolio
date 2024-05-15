@@ -75,12 +75,11 @@ sr.reveal('.education__container, .education__title, .education__subtitle, .educ
 //send successfully
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contact-form');
-    const successMessage = document.getElementById('success-message');
+    const confirmationMessage = document.getElementById('confirmation-message');
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        // Submit the form data to Formspree
         const formData = new FormData(form);
         const response = await fetch(form.action, {
             method: form.method,
@@ -90,20 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Check if form submission was successful
         if (response.ok) {
-            // Display success message
-            successMessage.style.display = 'block';
-            // Optionally, reset the form
+            confirmationMessage.textContent = 'Your custom confirmation message here.';
+            confirmationMessage.style.display = 'block';
             form.reset();
-            // Hide the success message after a few seconds
             setTimeout(function() {
-                successMessage.style.display = 'none';
-            }, 3000); // Adjust the time as needed
+                confirmationMessage.style.display = 'none';
+            }, 3000);
         } else {
-            // Handle error
             console.error('Form submission failed:', response.statusText);
         }
     });
 });
-
